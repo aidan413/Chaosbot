@@ -4,7 +4,7 @@ import os
 import random
 
 
-bot=commands.Bot(command_prefix='#')
+bot=commands.Bot(command_prefix='#',case_insensitive=True)
 
 def read_token():
     with open("token.txt","r") as f:
@@ -20,7 +20,7 @@ async def on_ready():
     for guild in bot.guilds:
         invdict[guild.id]="a"
         randict[guild.id]=False
-    print(f'We have logged in as {bot.user}')
+    print(f'{bot.user} has connected to discord')
 
 @bot.event
 async def on_guild_join(guild):
