@@ -4,7 +4,7 @@ import os
 import random
 
 
-bot=commands.Bot(command_prefix='#',case_insensitive=True)
+bot=commands.Bot(command_prefix='^',case_insensitive=True)
 
 def read_token():
     with open("token.txt","r") as f:
@@ -32,7 +32,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    is_command=message.content.startswith('#') and message.content[1].isalpha()
+    is_command=message.content.startswith('^') and message.content[1].isalpha()
 
     for i in invdict[message.guild.id]:
         if (i in message.content.lower() and not is_command):
