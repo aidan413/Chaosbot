@@ -96,8 +96,4 @@ async def random_off(ctx):
     await ctx.send(embed=embed)
 
 
-
-
-
-
 bot.run(token)
