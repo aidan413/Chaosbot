@@ -4,14 +4,15 @@ import os
 import random
 
 
+
 bot=commands.Bot(command_prefix='^',case_insensitive=True)
 
-def read_token():
-    with open("token.txt","r") as f:
-        lines=f.readlines()
-        return lines[0].strip()
+#def read_token():
+    #with open("token.txt","r") as f:
+        #lines=f.readlines()
+        #return lines[0].strip()
 
-token=read_token()
+token=token.retoken()
 invdict={}
 randict={}
 
@@ -92,4 +93,4 @@ async def random_off(ctx):
 
 
 
-bot.run(token)
+bot.run(TOKEN)
