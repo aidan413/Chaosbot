@@ -9,7 +9,7 @@ import random
 bot=commands.Bot(command_prefix='^',case_insensitive=True)
 
 
-token=os.getenv('TOKEN')
+token=os.getenv('LTOKEN')
 invdict={}
 randict={}
 
