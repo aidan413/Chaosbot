@@ -12,6 +12,8 @@ bot=commands.Bot(command_prefix='^',case_insensitive=True)
 token=os.getenv('LTOKEN')
 invdict={}
 randict={}
+alph='abcdefghijklmnopqrstuvwxyz'
+commlist=['^c', '^k', '^t' '^f']
 
 @bot.event
 async def on_ready():
@@ -30,18 +32,23 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    is_command=message.content.startswith('^') and message.content[1].isalpha()
+    is_command=message.content[0:2] in commlist
+
+    if is_command and message.content[0:2]!='^c':
+        if len(message.content)>3:
+            is_command=False
+
+    if is_command and message.content[0:2]=='^c':
+        if message.content[2]!=' ':
+            is_command=False
+        
+        if not message.content[3:].isalpha():
+            is_command=False
 
     for i in invdict[message.guild.id]:
         if (i in message.content.lower() and not is_command):
             if randict[message.guild.id]==True:
-                alph=False
-                while not alph:
-                    letter=message.content[random.randint(0,len(message.content)-1)]
-                    if letter.isalpha():
-                        invdict[message.guild.id]=letter.lower()
-                        alph=True
-                        
+                invdict[message.guild.id]=alph[random.randint(0,25)]        
                     
             await message.channel.send('no')
             await message.delete()
@@ -68,7 +75,7 @@ async def key(ctx):
     )
     await ctx.send(embed=embed)
 
-@bot.command(name='rt')
+@bot.command(name='t')
 async def random_on(ctx):
     
     randict[ctx.guild.id]=True
@@ -79,7 +86,7 @@ async def random_on(ctx):
     await ctx.send(embed=embed)
     
 
-@bot.command(name='rf')
+@bot.command(name='f')
 async def random_off(ctx):
     randict[ctx.guild.id]=False
     embed=discord.Embed(
