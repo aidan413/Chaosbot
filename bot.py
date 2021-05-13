@@ -12,7 +12,6 @@ bot=commands.Bot(command_prefix='^',case_insensitive=True)
 token=os.getenv('LTOKEN')
 invdict={}
 randict={}
-alph='abcdefghijklmnopqrstuvwxyz'
 commlist=['^c', '^k', '^t' '^f']
 
 @bot.event
@@ -48,7 +47,13 @@ async def on_message(message):
     for i in invdict[message.guild.id]:
         if (i in message.content.lower() and not is_command):
             if randict[message.guild.id]==True:
-                invdict[message.guild.id]=alph[random.randint(0,25)]        
+                alph=False
+                while not alph:
+                    letter=message.content[random.randint(0,len(message.content)-1)]  
+                    if letter.isalpha():
+                        invdict[message.guild.id]=letter
+                        alph=True
+
                     
             await message.channel.send('no')
             await message.delete()
