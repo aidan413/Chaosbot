@@ -47,12 +47,12 @@ async def on_message(message):
     for i in invdict[message.guild.id]:
         if (i in message.content.lower() and not is_command):
             if randict[message.guild.id]==True:
-                isalph=False
-                while not isalph:
+                alph=False
+                while not alph:
                     letter=message.content[randint(0,len(message.content)-1)]  
                     if letter.isalpha():
                         invdict[message.guild.id]=letter
-                        isalph=True
+                        alph=True
 
                     
             await message.channel.send('no')
