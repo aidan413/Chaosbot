@@ -12,7 +12,7 @@ bot=commands.Bot(command_prefix='^',case_insensitive=True)
 token=os.getenv('LTOKEN')
 invdict={}
 randict={}
-commlist=['^c', '^k', '^t' '^f']
+commlist=['^c', '^k', '^r']
 
 @bot.event
 async def on_ready():
@@ -80,25 +80,25 @@ async def key(ctx):
     )
     await ctx.send(embed=embed)
 
-@bot.command(name='t')
-async def random_on(ctx):
+@bot.command(name='r')
+async def random(ctx):
     
-    randict[ctx.guild.id]=True
-    embed=discord.Embed(
-    title='Random key change on',
-    color=discord.Colour.red()
-    )
-    await ctx.send(embed=embed)
-    
+    if not randict[ctx.guild.id]:
+        randict[ctx.guild.id]=True
+        embed=discord.Embed(
+        title='Random key change on',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
 
-@bot.command(name='f')
-async def random_off(ctx):
-    randict[ctx.guild.id]=False
-    embed=discord.Embed(
-    title='Random key change off',
-    color=discord.Colour.red()
-    )
-    await ctx.send(embed=embed)
+    if randict[ctx.guild.id]:
+        randict[ctx.guild.id]=False
+        embed=discord.Embed(
+        title='Random key change off',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
+    
 
 
 bot.run(token)
