@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-import random
+from random import randint
 
 
 
@@ -49,7 +49,7 @@ async def on_message(message):
             if randict[message.guild.id]==True:
                 alph=False
                 while not alph:
-                    letter=message.content[random.randint(0,len(message.content)-1)]  
+                    letter=message.content[randint(0,len(message.content)-1)]  
                     if letter.isalpha():
                         invdict[message.guild.id]=letter
                         alph=True
@@ -91,7 +91,7 @@ async def random(ctx):
         )
         await ctx.send(embed=embed)
 
-    if randict[ctx.guild.id]:
+    elif randict[ctx.guild.id]:
         randict[ctx.guild.id]=False
         embed=discord.Embed(
         title='Random key change off',
