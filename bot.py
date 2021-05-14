@@ -49,7 +49,7 @@ async def on_message(message):
             if randict[message.guild.id]==True:
                 alph=False
                 while not alph:
-                    letter=message.content[randint(0,len(message.content)-1)]  
+                    letter=message.content[randint(0,len(message.content)-1)].lower()
                     if letter.isalpha():
                         invdict[message.guild.id]=letter
                         alph=True
