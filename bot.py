@@ -109,7 +109,7 @@ async def enable(ctx):
     if not enadict[ctx.guild.id]:
         enadict[ctx.guild.id]=True
         embed=discord.Embed(
-        title='Bot on',
+        title='Bot has been turned on',
         color=discord.Colour.red()
         )
         await ctx.send(embed=embed)
@@ -117,7 +117,7 @@ async def enable(ctx):
     elif enadict[ctx.guild.id]:
         enadict[ctx.guild.id]=False
         embed=discord.Embed(
-        title='Bot off',
+        title='Bot has been turned off',
         color=discord.Colour.red()
         )
         await ctx.send(embed=embed)
