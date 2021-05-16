@@ -12,19 +12,22 @@ bot=commands.Bot(command_prefix='^',case_insensitive=True)
 token=os.getenv('LTOKEN')
 invdict={}
 randict={}
-commlist=['^c', '^k', '^r']
+enadict={}
+commlist=['^c', '^k', '^r','^e','^s']
 
 @bot.event
 async def on_ready():
     for guild in bot.guilds:
         invdict[guild.id]="a"
         randict[guild.id]=False
+        enadict[guild.id]=True
     print(f'{bot.user} has connected to discord')
 
 @bot.event
 async def on_guild_join(guild):
     invdict[guild.id]="a"
     randict[guild.id]=False
+    enadict[guild.id]=True
 
 @bot.event
 async def on_message(message):
@@ -44,19 +47,20 @@ async def on_message(message):
         if not message.content[3:].isalpha():
             is_command=False
 
-    for i in invdict[message.guild.id]:
-        if (i in message.content.lower() and not is_command):
-            if randict[message.guild.id]==True:
-                alph=False
-                while not alph:
-                    letter=message.content[randint(0,len(message.content)-1)].lower()
-                    if letter.isalpha():
-                        invdict[message.guild.id]=letter
-                        alph=True
+    if enadict[message.guild.id]:
+        for i in invdict[message.guild.id]:
+            if (i in message.content.lower() and not is_command):
+                if randict[message.guild.id]==True:
+                    alph=False
+                    while not alph:
+                        letter=message.content[randint(0,len(message.content)-1)].lower()
+                        if letter.isalpha():
+                            invdict[message.guild.id]=letter
+                            alph=True
 
-                    
-            await message.channel.send('no')
-            await message.delete()
+                        
+                await message.channel.send('no')
+                await message.delete()
 
     await bot.process_commands(message)
         
@@ -98,6 +102,43 @@ async def random(ctx):
         color=discord.Colour.red()
         )
         await ctx.send(embed=embed)
+
+@bot.command(name='e')
+async def enable(ctx):
+    
+    if not enadict[ctx.guild.id]:
+        enadict[ctx.guild.id]=True
+        embed=discord.Embed(
+        title='Bot on',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
+
+    elif enadict[ctx.guild.id]:
+        enadict[ctx.guild.id]=False
+        embed=discord.Embed(
+        title='Bot off',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
+
+@bot.command(name='s')
+async def status(ctx):
+
+    if enadict[ctx.guild.id]:
+        embed=discord.Embed(
+        title='Bot on',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
+
+    else:
+        embed=discord.Embed(
+        title='Bot off',
+        color=discord.Colour.red()
+        )
+        await ctx.send(embed=embed)
+
     
 
 
